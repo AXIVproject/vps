@@ -1,4 +1,4 @@
-# AXIV Node VPS Installation
+# AXIV Fundamentalnode VPS Installation
 
 This masternode and fundamentalnode installation script vastly simplifies the setup of a AXIV node running on a virtual private server (VPS), and it also adds a number of other powerful features, including:
 
@@ -16,19 +16,12 @@ Some notes and requirements:
 * Currently only Ubuntu 16.04 Linux is supported
 * This script needs to run as root or with sudo, the masternodes will and should not!
 
-This project was forked from https://github.com/masternodes/vps. @marsmensch (Florian) is the primary author behind this VPS installation script for masternodes. If you would like to donate to him, you can use the BTC address below
-
-**Have fun, this is crypto after all!**
-
-```
-BTC  33ENWZ9RCYBG7nv6ac8KxBUSuQX64Hx3x3
-```
-
-# Install guide on vultr
+This project was forked from https://github.com/masternodes/vps. @marsmensch (Florian) is the primary author behind this VPS installation script.
+# Install guide on Vultr
 
 ## How to get VPS server
 
-For new masternode owners, **Vultr** is recommended as a VPS hosting provider, but other providers that allow direct root SSH login access and offer Ubuntu 16.04 may work.
+For new fundamentalnode owners, **Vultr** is recommended as a VPS hosting provider, but other providers that allow direct root SSH login access and offer Ubuntu 16.04/18.04/20.04 may work.
 
 You can use the following referral link to sign up with Vultr for VPS hosting:
 
@@ -42,13 +35,13 @@ First, create a new VPS by clicking that small "+" button.
 
 ## Location choice
 
-You can choose any location. You may wish to have it hosted in a city/country near you, or choose a different area to help with the global decentralization of the AXIV masternode network.
+You can choose any location. You may wish to have it hosted in a city/country near you, or choose a different area to help with the global decentralization of the AXIV fundamentalnode network.
 
 <img src="docs/images/masternode_vps/location-choice.png" alt="VPS location choice" class="inline"/>
 
-## Linux distribution (Ubuntu 16.04 LTS)
+## Linux distribution (Ubuntu 18.04 LTS)
 
-Select Ubuntu 16.04.
+Select Ubuntu 18.04.
 
 <img src="docs/images/masternode_vps/linux-distribution--ubuntu-1604-lts-.png" alt="VPS location choice" class="inline"/>
 
@@ -106,63 +99,57 @@ For Mac users, open Terminal (e.g., Press Command-Space and type Terminal and pr
 ```
 ssh -l root <IP address>
 ```
-## Install Masternode
+## Install Fundamentalnode
 
 Login to your newly installed node as "root".
 
 <img src="docs/images/masternode_vps/first-ssh-session.png" alt="VPS sizing" class="inline"/>
 
-Enter this command to copy the node installation script and install a single AXIV *masternode*:
+To install a single AXIV fundamentalnode, use this command:
 
 ```bash
-git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz
-```
-
-If you have your masternode private key, please use this (you can generate your masternode private key with Step 2 below).
-
-```bash
-git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -k **PRIVATE KEY**
-```
-
-To install an AXIV *fundamentalnode*, use this command instead:
-
-```bash
-git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv-fn --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz
+git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv-fn -n 4 --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz
 ```
 
 If you have your fundamentalnode private key, please use this (you can generate your fundamentalnode private key with Step 2 below).
 
 ```bash
-git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -k **PRIVATE KEY**
+git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv -n 4 --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -k **PRIVATE KEY**
 ```
 
-Using this alternate command that specifies the private key, you can skip "Configure node configuration files" below, because the command above adds the node private key to the node configuration file.
+Using this alternate command that specifies the private key, you can skip "Configure node configuration files" below, because the command above has already added the node private key to the node configuration file.
 
-Note: As new versions of AXIV are released, the link after the --download argument will need to be updated to point to the latest official release. Please check the offical AXIV github to verify that you are downloading the latest offical release at https://github.com/AXIVproject/AXIV/
+The commands above also use an option (-n 4) to have the fundamentalnode use the single IPv4 address assigned to the VPS--this makes it easier for some peers to connect to it. If you want to install multipple fundamentalnodes on the same VPS, see below for how to modify the commands above to handle that.
 
-This prepares the system and installs the AXIV node daemon. This includes downloading the latest AXIV masternode release, creating a swap file, configuring the firewall, and downloading the AXIV daemon binary files from the offical AXIV github site. This process takes a minute or two. If you omit the --download option, the script will compile the binaries using the AXIV github source code, which typically takes about 10-15 minutes.
+Note: As new versions of AXIV are released, the link after the --download argument will need to be updated to point to the latest official release. Please check the offical AXIV github to verify that you are downloading the latest offical release at https://github.com/AXIVproject/AXIV/.
+
+This prepares the system and installs the AXIV fundamentalnode daemon. This includes downloading the latest AXIV release, creating a swap file, configuring the firewall. This process should take less than a minute when using the ``--download`` option. If you omit the ``--download`` option, the script will compile the binaries using the AXIV github source code, which typically takes about 10-15 minutes.
 
 <img src="docs/images/masternode_vps/install-the-desired-masternode-and-amount.png" alt="VPS configuration" class="inline"/>
 
-While that is underway, go back to your local desktop and open axiv-qt.
+For the next step, go back to your local desktop and open axiv-qt.
 
-### More complex situations (ignore if you are installing a single masternode on a new VPS)
+### More complex situations (ignore if you are installing a single fundamentalnode on a new VPS)
 
-If you wish to install more than one masternode on the same VPS, you can add a -c parameter to tell the script how many to configure, so for example this would install three AXIV fundamentalnodes (all entered on one line):
+If you wish to install more than one fundamentalnode on the same VPS, you can add a -c parameter to tell the script how many to configure. The -n opption should be omitted in this case since IPv6 addresses are required to run multiple nodes on the same VPS.
+
+For example, this would install three AXIV fundamentalnodes (all entered on one line):
 
 ```bash
 git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv-fn --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -c 3 
 ```
+
+If you are installing a different number of fundamentalnodes, modify the number after -c accordingly.
 
 If you already have your fundamentalnode private keys, you can add them as shown below (all entered on one line):
 
 ```bash
 git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv-fn --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -c 3 --key **PRIVATE KEY 01** --key2 **PRIVATE KEY 02** --key3 **PRIVATE KEY 03**
 ```
-Using this command, you can skip the step for "Configure masternode configuration files", because the command above adds the masternode private keys to the masternode configuration files.
 
+Using this command, you can skip the step for "Configure fundamentalnode configuration files", because the command above has already added the fundamentalnode private keys to the fundamentalnode configuration files.
 
-If you are upgrading your node(s) to a new release, you should first remove the old version of the VPS script so that the new one you download is tagged with the latest version, and then you add a -u parameter to upgrade existing nodes:
+If you are upgrading your node(s) to a new release, you should first remove the old version of the VPS script so that the new one you download is tagged with the latest version, and then add a -u parameter to tell the script to upgrade existing nodes:
 
 ```bash
 rm -rf /root/vps
@@ -175,50 +162,42 @@ The project is configured to use the latest official release of the AXIV node co
 
 ## Configure AXIV Wallet
 ### Step1 - Create Collateral Transaction
-Once the wallet is open on your local computer, select the 'Receive' tab and generate a new receive address for the amount of 10,000 AXIV for a fundamentalnode, or 20,000 AXIV for a masternode. You may label it however you want to identify your node rewards (e.g., AXIV-FN-1, AXIV-MN-1). This label will show up in your transactions each time you receive a block reward.
+Once the wallet is open on your local computer, select the 'Receive' tab and generate a new receive address for the amount of 10,000 AXIV. You may label it however you want to identify your node rewards (e.g., AXIV-FN-1). This label will show up in your transactions each time you receive a fundamentalnode block reward.
 
 
 Click the Request payment button, and copy the address.
 
-![alt text](https://i.imgur.com/L3Ka6cg.png "Logo Title Text 1")
+<img src="docs/images/masternode_vps/receive-address.png" alt="Generate Receive Address" class="inline"/>
 
-Now go to the ‘Send' tab, paste the copied address, and send *exactly* 10,000 AXIV for a fundamentalnode (or 20,000 AXIV for a masternode) to it in a single transaction. For a fundamentalnode, the AXIV will be burned and will leave behind a 0.1234 AXIV amount that will be locked and is needed to keep receiving AXIV fundamentalnode rewards. For AXIV masternodes, this collateral transaction will be locked and paired with your new masternode, but can later be unlocked and spent if you decide to no longer run the masternode. If you are setting up more than one node at a time, repeat this process for each one.
+Now go to the ‘Send' tab, paste the copied address, enter *exactly* 10,000 AXIV in the Amount field, check the Fundamentalnode Payment checkbox, click Send, enter your wallet passphrase if it is requested, and then click Yes when the dialog asks if you are sure. For a fundamentalnode, the AXIV will be burned and will leave behind a 0.1234 AXIV amount that will be locked and is needed to keep receiving AXIV fundamentalnode rewards. If you are setting up more than one node at a time, repeat this process for each one.
 
 *You must wait for at least one confirmation (approx. 1 minute) on the blockchain before moving on to the next step!*
 
-![alt text](https://i.imgur.com/g00xJTC.png "Logo Title Text 1")
+<img src="docs/images/masternode_vps/send-fn-collateral.png" alt="Send Fundamentalnode Collateral" class="inline"/>
 
 ### Step 2 - Local PC Node Setup
 
 After waiting for at least one confirmation on the collateral transaction we just created, select Tools->Debug Console from the menu to open the debug console.
 
-![alt text](https://i.imgur.com/QHECool.png "Logo Title Text 1")
+Type the following commands in the debug console:
+```
+fundamentalnode genkey
+fundamentalnode outputs
+```
 
-For a fundamentalnode, type the following commands in the debug console:
-```fundamentalnode genkey
-fundamentalnode outputs```
-
-For a masternode, type this command instead:
-```masternode genkey
-masternode outputs```
-
-
-
-Under ‘Alias Name’ enter the name of your Masternode (in my case it is ‘AXIV-MN-1’). Then click both ‘Autofill Privkey’ and ‘Autofill Outputs’; this will automatically fill the ‘Priv Key’, ‘Output’ and ‘Output ID’ fields.
-
-The ‘VPS IP’ field will be blank, we will get to that in a moment.
+Copy and record this information in a notepad or other text editor file. The output from the ``fundamentalnode genkey`` command will need to be added to both the local PC's fundamentalnode.conf file and the VPS node's configuration file. The output from the ``fundamentalnode outputs`` command will need to be added to the local PC's fundamentalnode.conf file.
 
 ## End of installations
 
 When the script finishes, it will look similar to this:
 
-![alt text](https://i.imgur.com/FipCs5R.png "Logo Title Text 1")
+<img src="docs/images/masternode_vps/vps-script-complete.png" alt="Send Fundamentalnode Collateral" class="inline"/>
 
-You only have a few steps remaining to complete your Masternode configuration.
+You only have a few steps remaining to complete your fundamentalnode configuration.
 
-## Configure Masternode Configuration Files
+## Configure fundamentalnode Configuration Files
 
-Since this installation method supports multiple masternodes, the AXIV configuration files have a node number added to them (e.g., axiv_n1.conf, axiv_n2.conf), stored in the /etc/masternodes directory. If you have a single masternode on the VPS, you will only need to edit /etc/masternodes/axiv_n1.conf.
+Since this installation method supports multiple fundamentalnodes, the AXIV configuration files have a node number added to them (e.g., axiv_n1.conf, axiv_n2.conf), stored in the /etc/masternodes directory. If you have a single fundamentalnode on the VPS, you will only need to edit /etc/masternodes/axiv_n1.conf.
 
 To open axiv_n1.conf for editing, enter these commands:
 
