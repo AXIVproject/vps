@@ -207,98 +207,106 @@ You will see something similar to this:
 
 Following the steps above, you only need to change the fundamentalnode private key. We recommend using IPv6 which is the default, but if you choose IPv4 when you ran the installation script, please replace each place you see ``[#NEW_IPv4_ADDRESS_FOR_MASTERNODE_NUMBER:::1]`` with your VPS IP address, which can be found by running ``ifconfig`` at the VPS command prompt and looking in the ``emp1so`` section for the value after ``inet`` that looks like four numbers separated by periods. 
 
-Replace HERE_GOES_YOUR_MASTERNODE_KEY_FOR_MASTERNODE_axiv_1 with the copy of your ‘Priv Key’ from the local wallet.
+Replace HERE_GOES_YOUR_FUNDAMENTALNODE_KEY_FOR_FUNDAMENTALNODE_axiv_1 with the copy of your ‘Priv Key’ from the local wallet.
 
 ![alt text](https://i.imgur.com/D6Z8sIe.png "Logo Title Text 1")
 
-Once you have your masternode private key entered, press ‘Ctrl+X’ to exit, press ‘Y’ to save when prompted, and press ‘Enter’ to exit.
-
-Once you exit the configuration screen, you can start your masternode.
-
-Copy the IP from ```fundamentalnodeaddr=``` (highlighted in red in the image above) and paste it into the ‘VPS IP’ field of the local wallet Masternode setup. Every field should now be full. Copy your ‘Priv Key’ (we will need this soon) and click ‘OK’.
-
-![alt text](https://i.imgur.com/7EQ19Fh.png "Logo Title Text 1")
-
-The next step will be to add your masternode private key.
+Once you have your fundamentalnode private key entered, press ‘Ctrl+X’ to exit, press ‘Y’ to save when prompted, and press ‘Enter’ to exit.
 
 
-## Start your Masternode
+Copy the IP from ```fundamentalnodeaddr=``` (highlighted in red in the image above) and paste it into the same place you recorded the fundamentalnode private key and . Every field should now be full. Copy your ‘Priv Key’ (we will need this soon) and click ‘OK’.
 
-A script for starting all masternodes on the VPS has been created at /usr/local/bin/activate_masternodes_axiv.sh. Run this command after your masternode configuration written above. To do this, enter:
+Once you exit the configuration screen, you can start your fundamentalnode at the command prompt with this command:
 
-```/usr/local/bin/activate_masternodes_axiv```
-
+```
+activate_masternodes_axiv
+```
 The masternode daemons will start and begin loading the AXIV Blockchain.
 
+## Edit fundamentalnode.conf file
+
+The next step will be to add your fundamentalnode information to your local PC's fundamentalnode.conf file.
+
+From your AXIV wallet on your PC, go to the menu and select Tools->Open Fundamentalnode Configuration File. This will open the file in the default text editor if one is set up for .conf files (typically on Windows this is set up to use Notepad).
+
+The format of each entry is as follows, one line per fundamentalnode, with each item separated by one space:
+
+<Alias> <IP Address:Port> <Fundamentalnode Private Key> <Transaction Output TXID> <Transaction Output Index>
+
+- Alias: This can be whatever you want to identify the fundamentalnode, but typically would be the same as what was used in the Receive step above (e.g., AXIV-FN-1)
+- IP Address:Port: This would use the IP address copied from the VPS, and the port would always be 10135, with a colon in between the IP address and the port
+- Fundamentalnode Private Key: This is the output copied from the ``fundamentalnode genkey`` command
+- Transaction Output TXID: This is the long string from the "txhash" part of output from the ``fundamentalnode outputs`` command, between double quotes
+- Transaction Output Index: This is typically a single number, often 0 or 1 (but it can be higher), coming from the "outputidx" part of the output from the ``fundamentalnode outputs`` command, again between double quotes
+
+For example, if you recorded the following:
+- IP Address: 43.31.243.219
+- fundamentalnode genkey: 8C8cXXwn6bGxtaMJKkQweXeqfNDN1WgHCZU3yeeuGzUgtqqJmh1
+- fundamentalnode outputs: 
+```
+  {
+    "txhash": "e6337aa1c800852eb7c8c26e08b330a76dcbb888e424b3c6f62750a9290248fb",
+    "outputidx": 1
+  }
+```
+
+Then the line that should be added to fundamentalnode.conf would read:
+
+``AXIV-FN-1 43.31.243.219:10135 8C8cXXwn6bGxtaMJKkQweXeqfNDN1WgHCZU3yeeuGzUgtqqJmh1 e6337aa1c800852eb7c8c26e08b330a76dcbb888e424b3c6f62750a9290248fb 1``
+
+This would all be entered on a single line with exactly 1 space separating each item. If you have more than one fundamentalnode being controlled by that wallet, then there would be sequential lines in the file, one for each fundamentalnode.
+
+Add the appropriate line(s), save the file, exit from the text editor, close the AXIV wallet and then restart it.
 ## Check Syncing Status of Masternode
 
-The masternode cannot complete activation until it is fully synced with the AXIV Blockchain network.
+The fundamentalnode cannot complete activation until it is fully synced with the AXIV blockchain network.
 
-To check the status of your masternode, please enter the command below in the VPS terminal. If you have multiple masternodes on the same VPS, you can change n1 to n2 etc. to check the status of each one.
+To check the status of your fundamentalnode, you can enter the command below in the VPS terminal. If you have multiple masternodes on the same VPS, you can change n1 to n2 etc. to check the status of each one.
 
 ```/usr/local/bin/axiv-cli -conf=/etc/masternodes/axiv_n1.conf getinfo```
 
 The output will look like this:
 
 ```{
-  "version": 1010000,
-  "protocolversion": 7002,
+  "version": 1000200,
+  "protocolversion": 71025,
   "walletversion": 61000,
-  "balance": 0.00000000,
-  "privatesend_balance": 0.00000000,
-  "blocks": 176209,
+  "balance": 2402646.21090299,
+  "blocks": 103752,
   "timeoffset": 0,
-  "connections": 44,
+  "connections": 7,
   "proxy": "",
-  "difficulty": 42882.54964804553,
+  "difficulty": 39438.2266625039,
   "testnet": false,
-  "moneysupply" : 11814171.53907114,
-  "zPHRsupply" : {
-      "1" : 263.00000000,
-      "5" : 135.00000000,
-      "10" : 500.00000000,
-      "50" : 700.00000000,
-      "100" : 1300.00000000,
-      "500" : 5000.00000000,
-      "1000" : 11000.00000000,
-      "5000" : 90000.00000000,
-      "total" : 108898.00000000
-  },
-  "keypoololdest" : 1507302593,
-  "keypoolsize" : 1001,
-  "paytxfee" : 0.00000000,
-  "relayfee" : 0.00010000,
-  "staking status" : "Staking Not Active",
-  "errors" : ""
+  "moneysupply": 7598551.70426021,
+  "keypoololdest": 1621182523,
+  "keypoolsize": 1001,
+  "unlocked_until": 0,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00010000,
+  "staking status": "Staking Active",
+  "errors": ""
 }
 ```
 
-We're looking at the blocks, and need that to be the latest block in the blockchain. You can check your local wallet to see the latest block by hovering over the green check mark.
+The blocks line above needs to be the latest block in the blockchain. You can check your local wallet to see the latest block by hovering over the yellow check mark in the lower right corner of the wallet.
 
-![alt text](https://i.imgur.com/xPv4XmT.png "Logo Title Text 1")
+Once your fundamentalnode has synced up to the latest block, go to next step. The syncing process may take 15-30 minutes, or more, as the AXIV Blockchain grows. You can keep checking progress with the command above, by pressing the ‘Up’ arrow and the ‘Enter’ key to repeat it (or by pasting the command in again).
 
-Once your masternode has synced up to the latest block, go to next step. The syncing process may take 15-30 minutes, or more, as the AXIV Blockchain grows. You can keep checking progress with the command above, by pressing the ‘Up’ arrow and the ‘Enter’ key to repeat it (or by pasting the command in again).
+## Start Fundamentalnode
 
-## Start Masternode
+When your fundamentalnode is fully synced on the VPS, go back to the debug console of the wallet (Tools->Debug Console), and type the following command, replacing AXIV-FN-1 with the alias you chose to put in the fundamentalnode.conf file:
 
-When your Masternode is fully synced on the VPS, go back to the ‘Masternode’ tab of the local wallet and click ‘Start Alias’. 
-
-![alt text](https://i.imgur.com/JPPxFcm.png "Logo Title Text 1")
-
-Click ‘Yes’ to start your Masternode.
+```
+startfundamentalnode alias false "AXIV-FN-1"
+```
 
 Once you have done this, you should get a confirmation that the Masternode has started successfully!
 
-![alt text](https://i.imgur.com/C8UkC1i.png "Logo Title Text 1")
+If you go back to the Nodes tab of the wallet and click on FUNDAMENTAL NODES, the ‘Status’ for the fundamentalnode should now say ‘Enabled’, and within an hour or so the timer in the ‘Active’ column should start increasing.
 
-The ‘Status’ should now say ‘Enabled’, and within an hour the timer in the ‘Active’ column should start increasing.
-
-Congratulations, your AXIV Masternode is now set up and running! Depending on how many masternodes there are, it may take 12-24 hours before you see your first masternode reward. This is normal and rewards should come at more regular intervals after the first one.
+Congratulations, your AXIV fundamentalnode is now set up and running! Depending on how many fundamentalnodes there are, it may take 12-24 hours before you see your first fundamentalnode reward. This is normal and rewards should come at more regular intervals after the first one.
 
 ## Issues and Questions
 
-Please open a GitHub Issue  here: https://github.com/AXIVproject/vps/issues if there are problems with this installation method. Many AXIV team members actively support people installing masternodes and can provide assistance in the AXIV Discord channel. Here is a Discord invitation:
-
-https://discord.gg/sbgdcdv
-
-If you would like to make a donation to AXIV's ongoing development, you can send AXIV to the core team at this address: PDjGJMDzvJnvbxxgR1bgPm77fFLxn3KAg8
+Please open a GitHub Issue  here: https://github.com/AXIVproject/vps/issues if there are problems with this installation method. AXIV team members actively support people installing fundamentalnodes and can provide assistance.
