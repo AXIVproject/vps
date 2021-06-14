@@ -132,15 +132,15 @@ Run it after you finished configuration, e.g. after a PIVX installation do.
 
 ## Last step, the controller
 
-To activate the new nodes in your _local_ (not the VPS) controller wallet, add the bind address entries with port to a file called "masternode.conf" as usual.
+To activate the new nodes on your _local_ PC (not the VPS) controller wallet, add the bind address entries with port to a configuration file called "masternode.conf" ("fundamentalnode.conf" for fundamentalnodes) as usual.
 
      MN1 [2002:470:1111:1a4:51]:51472 KEY TX OUTPUT
      MN2 [2003:470:1111:1a4:52]:51472 KEY TX OUTPUT
      MN3 [2003:470:1111:1a4:53]:51472 KEY TX OUTPUT
 
-To make this a bit easier for large installations, i implemented a small gimmick in the newest version. Now after the script has run, a partial of the "masternode.conf" file is generated and placed on the VPS eg for XIOS at "/tmp/pivx_masternode.conf"
+To make this a bit easier for large installations, i implemented a small gimmick in the newest version. Now after the script has run, a partial of the configuration file is generated and placed on the VPS eg for AXIV at "/tmp/axiv_masternode.conf"
 
-So you can take the contents from there and paste it into your local controller-wallets masternode.conf all that you need to add is the relevant pieces from "masternode outputs"
+So you can take the contents from there and paste it into your local controller-wallets masternode.conf / fundamentalnode.conf all that you need to add is the relevant pieces from "masternode outputs" (or "fundamentalnode outputs" for fundamentalnodes).
 
 <img src="images/masternode_vps/controller_conf_partial.png" alt="controller conference generated partial" class="inline"/>
 
