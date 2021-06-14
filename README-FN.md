@@ -205,7 +205,7 @@ You will see something similar to this:
 
 <img src="docs/images/masternode_vps/nano-fn-conf.png" alt="Edit VPS Fundamentalnode Configuration File" class="inline"/>
 
-You only need to change the masternode private key. We recommend using IPv6 which is the default, but if you choose IPv4 when you ran the installation script, please replace each place you see ``[#NEW_IPv4_ADDRESS_FOR_MASTERNODE_NUMBER:::1]`` with your VPS IP address, which can be found by running ``ifconfig`` at the VPS command prompt and looking in the ``emp1so`` section for the value after ``inet`` that looks like four numbers separated by periods. 
+Following the steps above, you only need to change the fundamentalnode private key. We recommend using IPv6 which is the default, but if you choose IPv4 when you ran the installation script, please replace each place you see ``[#NEW_IPv4_ADDRESS_FOR_MASTERNODE_NUMBER:::1]`` with your VPS IP address, which can be found by running ``ifconfig`` at the VPS command prompt and looking in the ``emp1so`` section for the value after ``inet`` that looks like four numbers separated by periods. 
 
 Replace HERE_GOES_YOUR_MASTERNODE_KEY_FOR_MASTERNODE_axiv_1 with the copy of your ‘Priv Key’ from the local wallet.
 
