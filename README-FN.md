@@ -108,18 +108,16 @@ Login to your newly installed node as "root".
 To install a single AXIV fundamentalnode, use this command:
 
 ```bash
-git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv-fn -n 4 --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz
+git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv-fn --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz
 ```
 
 If you have your fundamentalnode private key, please use this (you can generate your fundamentalnode private key with Step 2 below).
 
 ```bash
-git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv -n 4 --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -k **PRIVATE KEY**
+git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -k **PRIVATE KEY**
 ```
 
 Using this alternate command that specifies the private key, you can skip "Configure node configuration files" below, because the command above has already added the node private key to the node configuration file.
-
-The commands above also use an option (-n 4) to have the fundamentalnode use the single IPv4 address assigned to the VPS--this makes it easier for some peers to connect to it. If you want to install multipple fundamentalnodes on the same VPS, see below for how to modify the commands above to handle that.
 
 Note: As new versions of AXIV are released, the link after the --download argument will need to be updated to point to the latest official release. Please check the offical AXIV github to verify that you are downloading the latest offical release at https://github.com/AXIVproject/AXIV/.
 
@@ -131,9 +129,7 @@ For the next step, go back to your local desktop and open axiv-qt.
 
 ### More complex situations (ignore if you are installing a single fundamentalnode on a new VPS)
 
-If you wish to install more than one fundamentalnode on the same VPS, you can add a -c parameter to tell the script how many to configure. The -n opption should be omitted in this case since IPv6 addresses are required to run multiple nodes on the same VPS.
-
-For example, this would install three AXIV fundamentalnodes (all entered on one line):
+If you wish to install more than one fundamentalnode on the same VPS, you can add a -c parameter to tell the script how many to configure. For example, this would install three AXIV fundamentalnodes (all entered on one line):
 
 ```bash
 git clone https://github.com/AXIVproject/vps.git && cd vps && ./install.sh -p axiv-fn --download https://github.com/AXIVproject/AXIV/releases/download/v1.0.2/axiv-1.0.2-x86_64-linux-gnu.tar.gz -c 3 
@@ -207,17 +203,9 @@ To open axiv_n1.conf for editing, enter these commands:
 
 You will see something similar to this:
 
-![alt text](https://i.imgur.com/qxYIvHJ.png "Logo Title Text 1")
+<img src="docs/images/masternode_vps/nano-fn-conf.png" alt="Edit VPS Fundamentalnode Configuration File" class="inline"/>
 
-Copy the IP from ```masternodeaddr=``` (highlighted in red in the image above) and paste it into the ‘VPS IP’ field of the local wallet Masternode setup. Every field should now be full. Copy your ‘Priv Key’ (we will need this soon) and click ‘OK’.
-
-![alt text](https://i.imgur.com/7EQ19Fh.png "Logo Title Text 1")
-
-The next step will be to add your masternode private key.
-
-## Add Masternode Private Key
-
-Back in Putty, you only need to change the masternode private key. (We recommend using IPv6 which is the default, but if you choose IPv4 when you ran the installation script, please edit #NEW_IPv4_ADDRESS_FOR_MASTERNODE_NUMBER to your VPS IP address). 
+You only need to change the masternode private key. We recommend using IPv6 which is the default, but if you choose IPv4 when you ran the installation script, please replace each place you see ``[#NEW_IPv4_ADDRESS_FOR_MASTERNODE_NUMBER:::1]`` with your VPS IP address, which can be found by running ``ifconfig`` at the VPS command prompt and looking in the ``emp1so`` section for the value after ``inet`` that looks like four numbers separated by periods. 
 
 Replace HERE_GOES_YOUR_MASTERNODE_KEY_FOR_MASTERNODE_axiv_1 with the copy of your ‘Priv Key’ from the local wallet.
 
@@ -226,6 +214,13 @@ Replace HERE_GOES_YOUR_MASTERNODE_KEY_FOR_MASTERNODE_axiv_1 with the copy of you
 Once you have your masternode private key entered, press ‘Ctrl+X’ to exit, press ‘Y’ to save when prompted, and press ‘Enter’ to exit.
 
 Once you exit the configuration screen, you can start your masternode.
+
+Copy the IP from ```fundamentalnodeaddr=``` (highlighted in red in the image above) and paste it into the ‘VPS IP’ field of the local wallet Masternode setup. Every field should now be full. Copy your ‘Priv Key’ (we will need this soon) and click ‘OK’.
+
+![alt text](https://i.imgur.com/7EQ19Fh.png "Logo Title Text 1")
+
+The next step will be to add your masternode private key.
+
 
 ## Start your Masternode
 
