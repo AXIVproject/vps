@@ -691,7 +691,7 @@ function prepare_mn_interfaces() {
 
     # this allows for more flexibility since every provider uses another default interface
     # current default is:
-    # * ens3 (vultr) w/ a fallback to "eth0" (Hetzner, DO & Linode w/ IPv4 only)
+    # * enp1s0 (vultr) w/ a fallback to "eth0" (Hetzner, DO & Linode w/ IPv4 only)
     #
 
     # check for the default interface status
