@@ -195,7 +195,7 @@ You only have a few steps remaining to complete your fundamentalnode configurati
 
 Since this installation method supports multiple fundamentalnodes, the AXIV configuration files have a node number added to them (e.g., axiv_n1.conf, axiv_n2.conf), stored in the /etc/masternodes directory. If you have a single fundamentalnode on the VPS, you will only need to edit /etc/masternodes/axiv_n1.conf.
 
-To open axiv_n1.conf for editing, enter these commands:
+To open axiv_n1.conf for editing on the VPS, enter these commands (in Putty or terminal):
 
 ```sudo apt-get install nano```
 
